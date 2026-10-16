@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <title>SD Mini Game - Sunset Racer 4P</title>
+    <link rel="stylesheet" href="../sdpi.css">
+    <script src="../sdtools.common.js"></script>
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Steering</div>
+            <select class="sdpi-item-value select sdProperty" id="steerSensitivity" oninput="setSettings()">
+                <option value="low">low</option>
+                <option value="normal" selected>normal</option>
+                <option value="high">high</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Wheel</div>
+            <select class="sdpi-item-value select sdProperty" id="steerMode" oninput="setSettings()">
+                <option value="center" selected>auto-center when dial stops</option>
+                <option value="hold">hold position (like a real wheel)</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Race Length</div>
+            <select class="sdpi-item-value select sdProperty" id="raceLength" oninput="setSettings()">
+                <option value="short">short (2 stages)</option>
+                <option value="normal" selected>normal (3 stages)</option>
+                <option value="long">long (5 stages)</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Traffic</div>
+            <select class="sdpi-item-value select sdProperty" id="traffic" oninput="setSettings()">
+                <option value="none">none</option>
+                <option value="normal" selected>normal</option>
+                <option value="heavy">heavy</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">How to play</div>
+            <details class="sdpi-item-value">
+                <summary>Controls</summary>
+                <p>Put Sunset Racer 4P on all 4 dials, dial n = player Pn.<br>
+                   Press dial: join (race starts 10 s after the first join, or when everyone joined)<br>
+                   Tap strip: start now / pause / resume<br>
+                   Rotate dial: steer<br>
+                   Hold dial: brake (gas is automatic)<br>
+                   Long press strip: back to lobby<br>
+                   Steering is per player. Race Length and Traffic are shared, the last change wins.<br>
+                   Add "Racer Map" on the keys above for a live map.</p>
+            </details>
+        </div>
+    </div>
+</body>
+</html>

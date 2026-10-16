@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <title>SD Mini Game - Sunset Racer</title>
+    <link rel="stylesheet" href="../sdpi.css">
+    <script src="../sdtools.common.js"></script>
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Steering</div>
+            <select class="sdpi-item-value select sdProperty" id="steerSensitivity" oninput="setSettings()">
+                <option value="low">low</option>
+                <option value="normal" selected>normal</option>
+                <option value="high">high</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Wheel</div>
+            <select class="sdpi-item-value select sdProperty" id="steerMode" oninput="setSettings()">
+                <option value="center" selected>auto-center when dial stops</option>
+                <option value="hold">hold position (like a real wheel)</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Difficulty</div>
+            <select class="sdpi-item-value select sdProperty" id="difficulty" oninput="setSettings()">
+                <option value="easy">easy (more time, less traffic)</option>
+                <option value="normal" selected>normal</option>
+                <option value="hard">hard (less time, more traffic)</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">How to play</div>
+            <details class="sdpi-item-value">
+                <summary>Controls</summary>
+                <p>Press dial: start<br>
+                   Rotate dial: steer<br>
+                   Hold dial: brake (gas is automatic)<br>
+                   Tap strip: pause / resume<br>
+                   Long press strip: back to title<br>
+                   Reach each checkpoint before time runs out.
+                   5 stages to the goal.<br>
+                   Add "Racer Map" on the keys above for a live map.</p>
+            </details>
+        </div>
+    </div>
+</body>
+</html>

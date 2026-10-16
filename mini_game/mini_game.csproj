@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>com.sd.minigame</AssemblyName>
+    <RootNamespace>MiniGame</RootNamespace>
+    <Platforms>AnyCPU</Platforms>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <LangVersion>8.0</LangVersion>
+    <Authors>SD Mini Game</Authors>
+    <Product></Product>
+    <Copyright>SD Mini Game</Copyright>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Fody" Version="6.6.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="StreamDeck-Tools" Version="6.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Layouts\**\*" />
+    <None Remove="PropertyInspector\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- 使用通配符來包含所有 Images 資料夾中的檔案 -->
+    <Content Include="Images\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- 觸控條自訂 layout -->
+    <Content Include="Layouts\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!-- 使用通配符來包含所有 PropertyInspector 資料夾中的檔案 -->
+    <Content Include="PropertyInspector\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\netstandard.dll" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <title>SD Mini Game - Breakout</title>
+    <link rel="stylesheet" href="../sdpi.css">
+    <script src="../sdtools.common.js"></script>
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Paddle Speed</div>
+            <select class="sdpi-item-value select sdProperty" id="paddleStep" oninput="setSettings()">
+                <option value="4">slow (4 px / tick)</option>
+                <option value="6">medium (6 px / tick)</option>
+                <option value="8" selected>normal (8 px / tick)</option>
+                <option value="12">fast (12 px / tick)</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Ball Speed</div>
+            <select class="sdpi-item-value select sdProperty" id="ballSpeed" oninput="setSettings()">
+                <option value="slow">slow</option>
+                <option value="normal" selected>normal</option>
+                <option value="fast">fast</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">How to play</div>
+            <details class="sdpi-item-value">
+                <summary>Controls</summary>
+                <p>Rotate dial: move paddle<br>
+                   Press dial / tap strip: start, launch, pause<br>
+                   Long press strip: restart</p>
+            </details>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,172 @@
+{
+  "Actions": [
+    {
+      "Icon": "Images/breakout",
+      "Name": "Breakout",
+      "States": [
+        {
+          "Image": "Images/breakout",
+          "TitleAlignment": "middle",
+          "FontSize": "10"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Breakout game on the touch strip. Rotate dial to move the paddle, press to start.",
+      "UUID": "com.sd.minigame.breakout",
+      "PropertyInspectorPath": "PropertyInspector/Breakout/index.html",
+      "Controllers": [ "Encoder" ],
+      "Encoder": {
+        "Image": "Images/breakout",
+        "layout": "Layouts/breakout.json",
+        "StackColor": "#FF4C4C",
+        "TriggerDescription": {
+          "Rotate": "Move paddle",
+          "Push": "Start / launch / pause",
+          "Touch": "Start / launch / pause",
+          "LongTouch": "Restart"
+        }
+      }
+    },
+    {
+      "Icon": "Images/snake",
+      "Name": "Snake",
+      "States": [
+        {
+          "Image": "Images/snake",
+          "TitleAlignment": "middle",
+          "FontSize": "10"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Snake game on the touch strip. Rotate dial to turn, press to start.",
+      "UUID": "com.sd.minigame.snake",
+      "PropertyInspectorPath": "PropertyInspector/Snake/index.html",
+      "Controllers": [ "Encoder" ],
+      "Encoder": {
+        "Image": "Images/snake",
+        "layout": "Layouts/snake.json",
+        "StackColor": "#5AD65A",
+        "TriggerDescription": {
+          "Rotate": "Turn left / right",
+          "Push": "Start / pause",
+          "Touch": "Start / pause",
+          "LongTouch": "Restart"
+        }
+      }
+    },
+    {
+      "Icon": "Images/foosball",
+      "Name": "Foosball",
+      "States": [
+        {
+          "Image": "Images/foosball",
+          "TitleAlignment": "middle",
+          "FontSize": "10"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "2-player foosball across the whole touch strip. Put it on all 4 dials: RED uses dial 1 + 3, BLUE uses dial 2 + 4.",
+      "UUID": "com.sd.minigame.foosball",
+      "PropertyInspectorPath": "PropertyInspector/Foosball/index.html",
+      "Controllers": [ "Encoder" ],
+      "Encoder": {
+        "Image": "Images/foosball",
+        "layout": "Layouts/foosball.json",
+        "StackColor": "#1F6B32",
+        "TriggerDescription": {
+          "Rotate": "Move rods",
+          "Push": "Kick (hold = lift) / start",
+          "Touch": "Pause / resume",
+          "LongTouch": "Back to title"
+        }
+      }
+    },
+    {
+      "Icon": "Images/racer",
+      "Name": "Sunset Racer",
+      "States": [
+        {
+          "Image": "Images/racer",
+          "TitleAlignment": "middle",
+          "FontSize": "10"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Retro arcade racing on the touch strip. Rotate dial to steer, hold dial to brake.",
+      "UUID": "com.sd.minigame.racer",
+      "PropertyInspectorPath": "PropertyInspector/Racer/index.html",
+      "Controllers": [ "Encoder" ],
+      "Encoder": {
+        "Image": "Images/racer",
+        "layout": "Layouts/racer.json",
+        "StackColor": "#FF8C20",
+        "TriggerDescription": {
+          "Rotate": "Steer",
+          "Push": "Start / hold to brake",
+          "Touch": "Pause / resume",
+          "LongTouch": "Back to title"
+        }
+      }
+    },
+    {
+      "Icon": "Images/racer4p",
+      "Name": "Sunset Racer 4P",
+      "States": [
+        {
+          "Image": "Images/racer4p",
+          "TitleAlignment": "middle",
+          "FontSize": "10"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "4-player split-screen race. Put it on all 4 dials: dial n is player n. Press to join, rotate to steer, hold to brake.",
+      "UUID": "com.sd.minigame.racer4p",
+      "PropertyInspectorPath": "PropertyInspector/Racer4P/index.html",
+      "Controllers": [ "Encoder" ],
+      "Encoder": {
+        "Image": "Images/racer4p",
+        "layout": "Layouts/racer.json",
+        "StackColor": "#FF8C20",
+        "TriggerDescription": {
+          "Rotate": "Steer",
+          "Push": "Join / hold to brake",
+          "Touch": "Start now / pause",
+          "LongTouch": "Back to lobby"
+        }
+      }
+    },
+    {
+      "Icon": "Images/racermap",
+      "Name": "Racer Map",
+      "States": [
+        {
+          "Image": "Images/racermap",
+          "TitleAlignment": "bottom",
+          "FontSize": "10"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Live track map for Sunset Racer / Racer 4P. Put it on several keys and they join into one big map. Press to zoom on the leader.",
+      "UUID": "com.sd.minigame.racermap",
+      "Controllers": [ "Keypad" ]
+    }
+  ],
+  "Author": "SD Mini Game",
+  "Description": "Stream Deck+ touch strip mini games",
+  "Name": "SD Mini Game",
+  "Icon": "Images/pluginIcon",
+  "Version": "1.0.0.0",
+  "CodePath": "com.sd.minigame",
+  "Category": "SD Mini Game",
+  "CategoryIcon": "Images/categoryIcon",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "6.0"
+  }
+}
