@@ -537,9 +537,9 @@ namespace MiniGame
                 Rect(c[1], x + 1, y + bh * 0.72, w - 2, bh * 0.14);
                 using (var b = new SolidBrush(F(c[1])))
                 {
-                    // 上面大字 SD，下面小字 MINI GAME
-                    gfx.DrawString("SD", SizedFont(bh * 0.42), b, new RectangleF((float)x, (float)y, (float)w, (float)(bh * 0.46)), fmtCenter);
-                    gfx.DrawString("MINI GAME", SizedFont(Math.Min(bh * 0.22, w * 0.13)), b, new RectangleF((float)x, (float)(y + bh * 0.42), (float)w, (float)(bh * 0.3)), fmtCenter);
+                    // 上面大字 SUNSET，下面小字 ARCADE
+                    gfx.DrawString("SUNSET", SizedFont(Math.Min(bh * 0.4, w * 0.18)), b, new RectangleF((float)x, (float)y, (float)w, (float)(bh * 0.46)), fmtCenter);
+                    gfx.DrawString("ARCADE", SizedFont(Math.Min(bh * 0.22, w * 0.14)), b, new RectangleF((float)x, (float)(y + bh * 0.42), (float)w, (float)(bh * 0.3)), fmtCenter);
                 }
             }
         }

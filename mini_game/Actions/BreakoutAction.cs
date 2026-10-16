@@ -17,7 +17,7 @@ namespace MiniGame
     /// 旋鈕轉動 = 移動球拍，旋鈕按下 / 觸控 = 開始、發球、暫停，觸控長按 = 重新開始。
     /// 畫面用 GDI+ 畫在 200x100 的 Bitmap 上，轉成 base64 丟給 layout 裡唯一的 pixmap。
     /// </summary>
-    [PluginActionId("com.sd.minigame.breakout")]
+    [PluginActionId("com.odiestudio.minigame.breakout")]
     public class BreakoutAction : KeyAndEncoderBase
     {
         private class PluginSettings

@@ -17,7 +17,7 @@ namespace MiniGame
     /// 旋鈕順時針一格 = 右轉 90 度，逆時針一格 = 左轉 90 度（相對蛇頭方向）。
     /// 旋鈕按下 / 觸控 = 開始、暫停，觸控長按 = 重新開始。
     /// </summary>
-    [PluginActionId("com.sd.minigame.snake")]
+    [PluginActionId("com.odiestudio.minigame.snake")]
     public class SnakeAction : KeyAndEncoderBase
     {
         private class PluginSettings

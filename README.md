@@ -1,4 +1,4 @@
-# SD Mini Game
+# Sunset Arcade
 
 Mini games for the Elgato **Stream Deck+**, played on the dials, the touch strip and the keys.
 
@@ -27,8 +27,17 @@ The output is in `mini_game/bin/Release/net48/`.
 
 1. Quit the Stream Deck app.
 2. Copy everything in `mini_game/bin/Release/net48/` to
-   `%APPDATA%\Elgato\StreamDeck\Plugins\com.sd.minigame.sdPlugin\`.
-3. Start the Stream Deck app. The actions are listed under **SD Mini Game**.
+   `%APPDATA%\Elgato\StreamDeck\Plugins\com.odiestudio.minigame.sdPlugin\`.
+3. Start the Stream Deck app. The actions are listed under **Sunset Arcade**.
+
+## Tools
+
+| Tool | What it does |
+|---|---|
+| `tools/make-icons.ps1` | Draws the category, action list and plugin icons into `mini_game/Images/`, and the 288 px store icon into `marketplace/` |
+| `tools/shots/` | Renders real game frames with the game code and lays them out as the Marketplace thumbnail and gallery images in `marketplace/`. Run `dotnet run -c Release` in that folder |
+
+The Marketplace name, description and image list are in `marketplace/listing.md`.
 
 ## Third-party libraries
 

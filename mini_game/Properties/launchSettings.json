@@ -2,7 +2,7 @@
   "profiles": {
     "mini_game": {
       "commandName": "Project",
-      "commandLineArgs": "-port 3000 -pluginUUID com.sd.minigame.breakout -registerEvent registerEvent -info {\\\"application\\\":{\\\"language\\\":\\\"en\\\",\\\"platform\\\":\\\"windows\\\",\\\"version\\\":\\\"6.0.0\\\"},\\\"devices\\\":[{\\\"id\\\":\\\"55F16B35884A859CCE4FFA1FC8D3DE5B\\\",\\\"size\\\":{\\\"columns\\\":4,\\\"rows\\\":2},\\\"type\\\":7}]} -break"
+      "commandLineArgs": "-port 3000 -pluginUUID com.odiestudio.minigame.breakout -registerEvent registerEvent -info {\\\"application\\\":{\\\"language\\\":\\\"en\\\",\\\"platform\\\":\\\"windows\\\",\\\"version\\\":\\\"6.0.0\\\"},\\\"devices\\\":[{\\\"id\\\":\\\"55F16B35884A859CCE4FFA1FC8D3DE5B\\\",\\\"size\\\":{\\\"columns\\\":4,\\\"rows\\\":2},\\\"type\\\":7}]} -break"
     }
   }
 }

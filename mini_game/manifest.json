@@ -1,7 +1,7 @@
 {
   "Actions": [
     {
-      "Icon": "Images/breakout",
+      "Icon": "Images/actions/breakout",
       "Name": "Breakout",
       "States": [
         {
@@ -12,7 +12,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Breakout game on the touch strip. Rotate dial to move the paddle, press to start.",
-      "UUID": "com.sd.minigame.breakout",
+      "UUID": "com.odiestudio.minigame.breakout",
       "PropertyInspectorPath": "PropertyInspector/Breakout/index.html",
       "Controllers": [ "Encoder" ],
       "Encoder": {
@@ -28,7 +28,7 @@
       }
     },
     {
-      "Icon": "Images/snake",
+      "Icon": "Images/actions/snake",
       "Name": "Snake",
       "States": [
         {
@@ -39,7 +39,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Snake game on the touch strip. Rotate dial to turn, press to start.",
-      "UUID": "com.sd.minigame.snake",
+      "UUID": "com.odiestudio.minigame.snake",
       "PropertyInspectorPath": "PropertyInspector/Snake/index.html",
       "Controllers": [ "Encoder" ],
       "Encoder": {
@@ -55,7 +55,7 @@
       }
     },
     {
-      "Icon": "Images/foosball",
+      "Icon": "Images/actions/foosball",
       "Name": "Foosball",
       "States": [
         {
@@ -66,7 +66,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "2-player foosball across the whole touch strip. Put it on all 4 dials: RED uses dial 1 + 3, BLUE uses dial 2 + 4.",
-      "UUID": "com.sd.minigame.foosball",
+      "UUID": "com.odiestudio.minigame.foosball",
       "PropertyInspectorPath": "PropertyInspector/Foosball/index.html",
       "Controllers": [ "Encoder" ],
       "Encoder": {
@@ -82,7 +82,7 @@
       }
     },
     {
-      "Icon": "Images/racer",
+      "Icon": "Images/actions/racer",
       "Name": "Sunset Racer",
       "States": [
         {
@@ -93,7 +93,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Retro arcade racing on the touch strip. Rotate dial to steer, hold dial to brake.",
-      "UUID": "com.sd.minigame.racer",
+      "UUID": "com.odiestudio.minigame.racer",
       "PropertyInspectorPath": "PropertyInspector/Racer/index.html",
       "Controllers": [ "Encoder" ],
       "Encoder": {
@@ -109,7 +109,7 @@
       }
     },
     {
-      "Icon": "Images/racer4p",
+      "Icon": "Images/actions/racer4p",
       "Name": "Sunset Racer 4P",
       "States": [
         {
@@ -120,7 +120,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "4-player split-screen race. Put it on all 4 dials: dial n is player n. Press to join, rotate to steer, hold to brake.",
-      "UUID": "com.sd.minigame.racer4p",
+      "UUID": "com.odiestudio.minigame.racer4p",
       "PropertyInspectorPath": "PropertyInspector/Racer4P/index.html",
       "Controllers": [ "Encoder" ],
       "Encoder": {
@@ -136,7 +136,7 @@
       }
     },
     {
-      "Icon": "Images/racermap",
+      "Icon": "Images/actions/racermap",
       "Name": "Racer Map",
       "States": [
         {
@@ -147,17 +147,18 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Live track map for Sunset Racer / Racer 4P. Put it on several keys and they join into one big map. Press to zoom on the leader.",
-      "UUID": "com.sd.minigame.racermap",
+      "UUID": "com.odiestudio.minigame.racermap",
       "Controllers": [ "Keypad" ]
     }
   ],
-  "Author": "SD Mini Game",
-  "Description": "Stream Deck+ touch strip mini games",
-  "Name": "SD Mini Game",
+  "Author": "odie studio",
+  "Description": "Retro arcade games for the Stream Deck+ dials and touch strip",
+  "URL": "https://github.com/diolinodie/sd-mini-game",
+  "Name": "Sunset Arcade",
   "Icon": "Images/pluginIcon",
   "Version": "1.0.0.0",
-  "CodePath": "com.sd.minigame",
-  "Category": "SD Mini Game",
+  "CodePath": "com.odiestudio.minigame",
+  "Category": "Sunset Arcade",
   "CategoryIcon": "Images/categoryIcon",
   "OS": [
     {

@@ -10,7 +10,7 @@ namespace MiniGame
     /// 放好幾顆的話依按鍵位置拼成一張大地圖（例如整排 4 顆或全部 8 顆）。
     /// 按下 = 全圖 / 跟著領先者放大 切換。
     /// </summary>
-    [PluginActionId("com.sd.minigame.racermap")]
+    [PluginActionId("com.odiestudio.minigame.racermap")]
     public class RacerMapAction : KeypadBase
     {
         private readonly int col, row;

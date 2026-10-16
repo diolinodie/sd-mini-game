@@ -12,7 +12,7 @@ namespace MiniGame
     /// 紅隊用旋鈕 1、3，藍隊用旋鈕 2、4。轉動 = 桿子上下移動，按下 = 踢球，按住不放 = 踢完維持抬腳讓球過去。
     /// 觸控條點一下 = 暫停 / 繼續，長按 = 回到開始畫面。
     /// </summary>
-    [PluginActionId("com.sd.minigame.foosball")]
+    [PluginActionId("com.odiestudio.minigame.foosball")]
     public class FoosballAction : KeyAndEncoderBase
     {
         private class PluginSettings

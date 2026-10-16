@@ -11,7 +11,7 @@ namespace MiniGame
     /// 轉動 = 方向盤，按住旋鈕 = 煞車（油門自動），觸控條點一下 = 暫停 / 繼續，長按 = 回標題。
     /// 遊戲本體在 RacerGame。
     /// </summary>
-    [PluginActionId("com.sd.minigame.racer")]
+    [PluginActionId("com.odiestudio.minigame.racer")]
     public class RacerAction : KeyAndEncoderBase
     {
         private class PluginSettings

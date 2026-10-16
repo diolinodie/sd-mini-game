@@ -15,7 +15,7 @@ namespace MiniGame
     /// 旋鈕 n = 玩家 Pn：按下 = 加入 / 按住煞車，轉動 = 方向盤。
     /// 觸控條點一下 = 開跑 / 暫停 / 繼續，長按 = 回到開始畫面。
     /// </summary>
-    [PluginActionId("com.sd.minigame.racer4p")]
+    [PluginActionId("com.odiestudio.minigame.racer4p")]
     public class RacerRaceAction : KeyAndEncoderBase
     {
         private class PluginSettings

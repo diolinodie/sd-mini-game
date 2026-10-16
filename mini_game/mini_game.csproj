@@ -2,15 +2,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net48</TargetFramework>
-    <AssemblyName>com.sd.minigame</AssemblyName>
+    <AssemblyName>com.odiestudio.minigame</AssemblyName>
     <RootNamespace>MiniGame</RootNamespace>
     <Platforms>AnyCPU</Platforms>
     <FileVersion>1.0.0.0</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <LangVersion>8.0</LangVersion>
-    <Authors>SD Mini Game</Authors>
+    <Authors>odie studio</Authors>
     <Product></Product>
-    <Copyright>SD Mini Game</Copyright>
+    <Copyright>odie studio</Copyright>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
