@@ -1,4 +1,4 @@
-import { action } from "@elgato/streamdeck";
+import { action, DialAction } from "@elgato/streamdeck";
 
 import { SnakeGame, SnakeSpeed } from "../games/snake";
 import { PLUGIN_UUID } from "../ids";
@@ -22,7 +22,7 @@ export class SnakeAction extends DialGameAction<SnakeSettings, SnakeGame> {
 		super("snake", { speed: "normal", wrap: "false", best: "0" });
 	}
 
-	protected override createGame(draw: (svg: string) => void, entry: () => DialGameEntry<SnakeSettings, SnakeGame>): SnakeGame {
+	protected override createGame(_dial: DialAction<SnakeSettings>, draw: (svg: string) => void, entry: () => DialGameEntry<SnakeSettings, SnakeGame>): SnakeGame {
 		const game = new SnakeGame(draw);
 		game.onBest = (best) => this.save(entry(), { best: String(best) });
 		return game;

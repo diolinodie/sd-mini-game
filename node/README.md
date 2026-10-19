@@ -4,11 +4,13 @@ Port of the C# plugin in `../mini_game/` to the official Elgato Node.js SDK (`@e
 
 | Game | Status |
 |---|---|
-| Snake | ported |
-| Breakout | todo |
-| Foosball | todo |
-| Sunset Racer | todo |
-| Sunset Racer 4P / Racer Map | todo |
+| Snake | ported, tested on device |
+| Breakout | ported |
+| Foosball | ported |
+| Sunset Racer | ported |
+| Sunset Racer 4P / Racer Map | ported |
+
+Still to do before merging: test everything on a device, port `tools/shots`, switch to the release UUID.
 
 ## Layout
 
@@ -16,7 +18,8 @@ Port of the C# plugin in `../mini_game/` to the official Elgato Node.js SDK (`@e
 |---|---|
 | `src/games/` | Game logic and drawing. No Stream Deck code, so it also runs in a browser or a test |
 | `src/actions/` | Stream Deck actions: map dial / touch events to a game, send frames as `setFeedback` |
-| `src/gfx/` | `Svg`, a tiny GDI+-style drawing API that outputs SVG. Frames go to the touch strip as `data:image/svg+xml;base64,...`, so there are no native dependencies |
+| `src/gfx/` | `Svg`, a tiny GDI+-style drawing API that outputs SVG. Frames go to the touch strip as `data:image/svg+xml;base64,...`, so there are no native dependencies. Stream Deck draws SVG with Qt (SVG Tiny 1.2, no `clipPath`), so transforms and clipping are applied in `Svg` and only absolute coordinates are written |
+| `src/games/net-random.ts` | Same algorithm as .NET `System.Random(seed)`, so the racer tracks are identical to the C# version |
 | `com.odiestudio.minigame.dev.sdPlugin/` | Plugin folder: manifest, images, layouts, property inspectors. `bin/` is the build output |
 
 ## Dev UUID

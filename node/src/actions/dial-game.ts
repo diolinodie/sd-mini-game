@@ -47,8 +47,8 @@ export abstract class DialGameAction<S extends JsonObject, G extends DialGame> e
 		this.logger = streamDeck.logger.createScope(name);
 	}
 
-	/** 建立遊戲；draw 收 SVG 字串 */
-	protected abstract createGame(draw: (svg: string) => void, entry: () => DialGameEntry<S, G>): G;
+	/** 建立遊戲；draw 收 SVG 字串，entry 在遊戲建好之後才拿得到（存設定用） */
+	protected abstract createGame(dial: DialAction<S>, draw: (svg: string) => void, entry: () => DialGameEntry<S, G>): G;
 
 	/** 把設定套到遊戲上，回傳要改寫的欄位（不用寫回就回傳 undefined） */
 	protected abstract applySettings(game: G, settings: S): Partial<S> | undefined;
@@ -71,7 +71,7 @@ export abstract class DialGameAction<S extends JsonObject, G extends DialGame> e
 
 		const action = ev.action;
 		let entry: DialGameEntry<S, G> | undefined;
-		const game = this.createGame(canvasFeedback(action), () => entry!);
+		const game = this.createGame(action, canvasFeedback(action), () => entry!);
 		entry = { game, action, settings };
 
 		this.entries.get(action.id)?.game.dispose();
@@ -102,9 +102,12 @@ export abstract class DialGameAction<S extends JsonObject, G extends DialGame> e
 		const entry = this.entries.get(ev.action.id);
 		if (!entry) return;
 
-		entry.settings = ev.payload.settings;
-		const write = this.applySettings(entry.game, ev.payload.settings);
-		if (write) this.save(entry, write);
+		// 跟 C# 的 AutoPopulateSettings 一樣只蓋掉 PI 送來的欄位：PI 不會送最高分這類欄位，要補回去存起來
+		const merged = { ...entry.settings, ...ev.payload.settings };
+		entry.settings = merged;
+		const write = this.applySettings(entry.game, merged);
+		const missing = Object.keys(merged).some((k) => !(k in ev.payload.settings));
+		if (write || missing) this.save(entry, write ?? {});
 		entry.game.render();
 	}
 }

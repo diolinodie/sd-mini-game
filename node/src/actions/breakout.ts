@@ -1,4 +1,4 @@
-import { action } from "@elgato/streamdeck";
+import { action, DialAction } from "@elgato/streamdeck";
 
 import { BallSpeed, BreakoutGame } from "../games/breakout";
 import { PLUGIN_UUID } from "../ids";
@@ -20,7 +20,7 @@ export class BreakoutAction extends DialGameAction<BreakoutSettings, BreakoutGam
 		super("breakout", { paddleStep: "8", ballSpeed: "normal" });
 	}
 
-	protected override createGame(draw: (svg: string) => void): BreakoutGame {
+	protected override createGame(_dial: DialAction<BreakoutSettings>, draw: (svg: string) => void): BreakoutGame {
 		return new BreakoutGame(draw);
 	}
 

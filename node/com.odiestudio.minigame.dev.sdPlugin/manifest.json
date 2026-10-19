@@ -84,6 +84,79 @@
           "LongTouch": "Back to title"
         }
       }
+    },
+    {
+      "Icon": "Images/actions/racer",
+      "Name": "Sunset Racer",
+      "States": [
+        {
+          "Image": "Images/racer",
+          "TitleAlignment": "middle",
+          "FontSize": 10
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Retro arcade racing on the touch strip. Rotate dial to steer, press dial to boost (3 per race).",
+      "UUID": "com.odiestudio.minigame.dev.racer",
+      "PropertyInspectorPath": "PropertyInspector/Racer/index.html",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "Layouts/racer.json",
+        "StackColor": "#FF8C20",
+        "TriggerDescription": {
+          "Rotate": "Steer",
+          "Push": "Start / boost",
+          "Touch": "Pause / resume",
+          "LongTouch": "Back to title"
+        }
+      }
+    },
+    {
+      "Icon": "Images/actions/racer4p",
+      "Name": "Sunset Racer 4P",
+      "States": [
+        {
+          "Image": "Images/racer4p",
+          "TitleAlignment": "middle",
+          "FontSize": 10
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "4-player split-screen race. Put it on all 4 dials: dial n is player n. Press to join, rotate to steer, press to boost (3 per race).",
+      "UUID": "com.odiestudio.minigame.dev.racer4p",
+      "PropertyInspectorPath": "PropertyInspector/Racer4P/index.html",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "Layouts/racer.json",
+        "StackColor": "#FF8C20",
+        "TriggerDescription": {
+          "Rotate": "Steer",
+          "Push": "Join / boost",
+          "Touch": "Start now / pause",
+          "LongTouch": "Back to lobby"
+        }
+      }
+    },
+    {
+      "Icon": "Images/actions/racermap",
+      "Name": "Racer Map",
+      "States": [
+        {
+          "Image": "Images/racermap",
+          "TitleAlignment": "bottom",
+          "FontSize": 10
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Live track map for Sunset Racer / Racer 4P. Put it on several keys and they join into one big map. Press to zoom on the leader.",
+      "UUID": "com.odiestudio.minigame.dev.racermap",
+      "Controllers": [
+        "Keypad"
+      ]
     }
   ],
   "Author": "odie studio",
