@@ -1,5 +1,6 @@
 import { Color, Colors, hex, rgb } from "../gfx/color";
 import { Font, Svg } from "../gfx/svg";
+import type { DialGame } from "../actions/dial-game";
 
 /**
  * 在 Stream Deck+ 觸控條（每顆旋鈕 200x100）上玩的貪食蛇。
@@ -37,7 +38,7 @@ type Point = { x: number; y: number };
 
 const key = (p: Point) => p.y * COLS + p.x;
 
-export class SnakeGame {
+export class SnakeGame implements DialGame {
 	/** 破紀錄時呼叫，讓外面存進設定 */
 	onBest?: (best: number) => void;
 
@@ -110,8 +111,12 @@ export class SnakeGame {
 		this.render();
 	}
 
-	/** 觸控長按 */
-	restart(): void {
+	/** 觸控點一下 = 跟按旋鈕一樣，長按 = 重新開始 */
+	touch(hold: boolean): void {
+		if (!hold) {
+			this.press();
+			return;
+		}
 		this.newGame();
 		this.render();
 	}
