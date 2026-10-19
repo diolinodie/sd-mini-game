@@ -19,7 +19,7 @@ Games
 Requirements
 - Stream Deck+ (the games use the dials and touch strip)
 - Windows 10 or later
-- Stream Deck 6.0 or later
+- Stream Deck 7.1 or later
 
 ## Images
 
