@@ -7,7 +7,7 @@ Mini games for the Elgato **Stream Deck+**, played on the dials, the touch strip
 | **Breakout** | 1 dial | Rotate to move the paddle, press to launch / pause, long-press the strip to restart |
 | **Snake** | 1 dial | Rotate to turn, press to start / pause |
 | **Foosball** | all 4 dials | 2 players. RED uses dial 1 + 3, BLUE uses dial 2 + 4. Rotate to move rods, press to kick, hold to lift |
-| **Sunset Racer** | 1 dial | Retro pseudo-3D racer. Rotate to steer, hold the dial to brake (gas is automatic). 5 stages, reach each checkpoint before time runs out |
+| **Sunset Racer** | 1 dial | Retro pseudo-3D racer. Rotate to steer, press the dial for a speed boost, 3 per race (gas is automatic). 5 stages, reach each checkpoint before time runs out |
 | **Sunset Racer 4P** | all 4 dials | 4-player split-screen race, dial n is player Pn. Press to join, the race starts 10 s after the first join |
 | **Racer Map** | keys | Live top-down map of the race with positions and ranking. Put it on several keys and they join into one big map. Press to zoom on the leader |
 

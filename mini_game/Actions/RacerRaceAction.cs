@@ -12,7 +12,7 @@ namespace MiniGame
 {
     /// <summary>
     /// 4 人同場賽車的一顆旋鈕。4 個放在同一台 Stream Deck+ 的旋鈕 1~4 上，共用一個 RacerRaceGame。
-    /// 旋鈕 n = 玩家 Pn：按下 = 加入 / 按住煞車，轉動 = 方向盤。
+    /// 旋鈕 n = 玩家 Pn：按下 = 加入 / 瞬間加速（每場 3 次），轉動 = 方向盤。
     /// 觸控條點一下 = 開跑 / 暫停 / 繼續，長按 = 回到開始畫面。
     /// </summary>
     [PluginActionId("com.odiestudio.minigame.racer4p")]
@@ -120,10 +120,7 @@ namespace MiniGame
             game?.Press(column);
         }
 
-        public override void DialUp(DialPayload payload)
-        {
-            game?.ReleasePress(column);
-        }
+        public override void DialUp(DialPayload payload) { }
 
         public override void TouchPress(TouchpadPressPayload payload)
         {
@@ -138,10 +135,7 @@ namespace MiniGame
             game?.Press(column);
         }
 
-        public override void KeyReleased(KeyPayload payload)
-        {
-            game?.ReleasePress(column);
-        }
+        public override void KeyReleased(KeyPayload payload) { }
 
         public override void OnTick() { }
 

@@ -197,7 +197,7 @@ namespace MiniGame
         {
             var bmp = new Bitmap(W, H);
             var g = Begin(bmp);
-            Title(g, "4-player split-screen racing", "Every dial is a player. Press to join, rotate to steer, hold to brake.");
+            Title(g, "4-player split-screen racing", "Every dial is a player. Press to join, rotate to steer, press to boost.");
 
             using (var map = Img("map_20"))
             {

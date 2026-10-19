@@ -137,8 +137,6 @@ namespace MiniGame
                 if (p.Sink != sink) return;
                 p.Sink = null;
                 p.LastSent = null;
-                // 換頁時收不到 DialUp，不清掉會一直煞車
-                p.D.Braking = false;
                 if (state == GameState.Lobby) p.Joined = false;
             }
         }
@@ -182,7 +180,7 @@ namespace MiniGame
             }
         }
 
-        /// <summary>旋鈕按下：加入 / 繼續 / 煞車</summary>
+        /// <summary>旋鈕按下：加入 / 繼續 / 加速</summary>
         public void Press(int column)
         {
             lock (sync)
@@ -199,18 +197,14 @@ namespace MiniGame
                     case GameState.Paused:
                         Resume();
                         break;
-                    default:
-                        if (players[column].Joined)
-                            players[column].D.Braking = true;
+                    case GameState.Racing:
+                        Player p = players[column];
+                        if (p.Joined && !p.Finished && p.D.Boost())
+                            p.D.ShowMessage("BOOST!", null, 0.8);
                         break;
                 }
             }
             RenderIfIdle();
-        }
-
-        public void ReleasePress(int column)
-        {
-            lock (sync) { players[column].D.Braking = false; }
         }
 
         /// <summary>觸控條點一下：開始 / 暫停 / 繼續</summary>
@@ -233,7 +227,6 @@ namespace MiniGame
                     default:
                         pausedFrom = state;
                         state = GameState.Paused;
-                        foreach (Player p in players) p.D.Braking = false;
                         StopTimer();
                         break;
                 }
@@ -450,7 +443,7 @@ namespace MiniGame
                     p.Finished = true;
                     p.FinishTime = raceTime;
                     p.Place = ++finishCount;
-                    p.D.Braking = false;
+                    p.D.BoostTimer = 0;
                     p.D.ShowMessage("GOAL!", $"{RacerConst.Ordinal(p.Place)}  {FormatTime(raceTime)}", 99);
                     if (finishWait < 0) finishWait = FINISH_WAIT;
                     Logger.Instance.LogMessage(TracingLevel.INFO, $"racer4p, finish place={p.Place} time={raceTime:F2}");
@@ -645,6 +638,7 @@ namespace MiniGame
             r.Text(FormatTime(raceTime), r.Mid, RacerRenderer.HudYellow, W / 2f, 8, StringAlignment.Center);
             r.StageBar($"STAGE {Math.Min(v.D.Stage, stages - 1) + 1}/{stages}", v.D.StageProgress(track));
             r.Speedo(v.D.Kmh);
+            r.BoostPips(v.D, Now());
 
             if (state == GameState.Countdown)
             {

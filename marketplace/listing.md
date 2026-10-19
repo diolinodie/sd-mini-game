@@ -12,7 +12,7 @@ Games
 - Breakout: rotate a dial to move the paddle, press to launch the ball.
 - Snake: rotate to turn, press to start or pause.
 - Foosball: a 2-player table across the whole touch strip. Red uses dials 1 and 3, blue uses dials 2 and 4. Rotate to slide the rods, press to kick.
-- Sunset Racer: a retro arcade racer on a single dial. Rotate to steer, hold the dial to brake, and reach each checkpoint before time runs out across five stages.
+- Sunset Racer: a retro arcade racer on a single dial. Rotate to steer, press the dial for a speed boost (3 per race), and reach each checkpoint before time runs out across five stages.
 - Sunset Racer 4P: split-screen racing for up to four players, one per dial. Press to join; the race starts 10 seconds after the first player joins.
 - Racer Map: put it on the keys to show a live map of the race with every player's position.
 

@@ -215,6 +215,19 @@ namespace MiniGame
             Text("km/h", Small, Color.White, 33, H - 11);
         }
 
+        /// <summary>右上角進度條下面，剩幾次加速，加速中會閃</summary>
+        public void BoostPips(RacerDriver driver, double now)
+        {
+            bool flash = driver.Boosting && (int)(now * 8) % 2 == 0;
+            for (int i = 0; i < RacerConst.BOOSTS; i++)
+            {
+                float x = W - 9 - i * 9;
+                bool left = i < driver.Boosts;
+                Rect(Color.Black, x - 1, 17, 9, 6);
+                Rect(left ? (flash ? Color.White : Color.FromArgb(0x30, 0xD0, 0xFF)) : Color.FromArgb(0x40, 0x40, 0x40), x, 18, 7, 4);
+            }
+        }
+
         #endregion
 
         #region 背景
@@ -719,7 +732,7 @@ namespace MiniGame
             if (d.OffRoad && d.Speed > 0)
                 by -= rng.Next(2);
 
-            DrawCarBody(cx, by, d.Lean, d.Braking && d.Speed > 0, speedPct, carColor);
+            DrawCarBody(cx, by, d.Lean, d.Boosting, speedPct, carColor);
 
             if (d.OffRoad && d.Speed > 0)
             {
@@ -738,7 +751,7 @@ namespace MiniGame
         }
 
         // 敞篷跑車，從後面看，約 54x30。lean = -1 左轉 / 0 / 1 右轉
-        private void DrawCarBody(float cx, float by, int lean, bool brakeLight, double speedPct, Color body)
+        private void DrawCarBody(float cx, float by, int lean, bool boost, double speedPct, Color body)
         {
             float L = lean * 2f, Lb = lean;
             Color hi = Lighter(body, 0.3);
@@ -754,7 +767,7 @@ namespace MiniGame
             Rect(body, cx - 24, by - 17, 48, 11);
             Rect(hi, cx - 24, by - 17, 48, 1);
             // 左右各兩顆圓尾燈，中間車牌，下面黑色保險桿
-            Color tail = brakeLight ? Color.FromArgb(0xFF, 0x90, 0x50) : Color.FromArgb(0xFF, 0x30, 0x20);
+            Color tail = Color.FromArgb(0xFF, 0x30, 0x20);
             Color tailRim = Darker(body, 0.5);
             Ellipse(tailRim, cx - 22, by - 15, 7, 6);
             Ellipse(tailRim, cx - 15, by - 15, 7, 6);
@@ -769,6 +782,16 @@ namespace MiniGame
             Rect(Color.FromArgb(0x20, 0x20, 0x20), cx - 24, by - 8, 48, 2);
             Rect(PoleColor, cx - 15, by - 7, 3, 2);
             Rect(PoleColor, cx + 12, by - 7, 3, 2);
+            if (boost)
+            {
+                // 加速時排氣管噴火
+                foreach (float ex in new[] { cx - 14.5f, cx + 12.5f })
+                {
+                    float fl = 4 + rng.Next(4);
+                    Ellipse(Color.FromArgb(0xFF, 0x60, 0x10), ex - 2, by - 6, 6, fl);
+                    Ellipse(Color.FromArgb(0xFF, 0xE0, 0x60), ex - 0.5f, by - 6, 3, fl * 0.6f);
+                }
+            }
 
             // 後車廂蓋、後照鏡
             Rect(body, cx - 22 + L, by - 21, 44, 5);

@@ -185,8 +185,8 @@ namespace MiniGame
             double[] pref = { -0.55, 0.55, 0, -0.55 };
             double[] lane = (double[])pref.Clone();
             double[] lanes = { -0.62, 0, 0.62 };
-            // 每個人在不同時間踩一下煞車，把車隊拉開
-            double[][] brakes = { new double[0], new[] { 6.0, 6.6 }, new[] { 3.0, 3.4, 14, 14.5 }, new[] { 9.0, 10.2 } };
+            // 每個人在不同時間加速，把車隊拉開
+            double[][] boosts = { new double[0], new[] { 6.0 }, new[] { 3.0, 14 }, new[] { 9.0, 20 } };
 
             double t = 0;
             int shot = 0;
@@ -218,7 +218,7 @@ namespace MiniGame
                     double curve = track.SegmentAt(d.Z).Curve;
                     double ff = sp * sp * curve * RacerConst.CENTRIFUGAL / (RacerConst.STEER_RATE * Math.Min(1, 0.25 + sp));
                     d.Steer = Math.Max(-1, Math.Min(1, ff + (lane[i] - d.X) * 2.2));
-                    d.Braking = brakes[i].Length > 0 && Enumerable.Range(0, brakes[i].Length / 2).Any(k => t >= brakes[i][k * 2] && t < brakes[i][k * 2 + 1]);
+                    if (boosts[i].Any(b => t >= b && t - 0.04 < b)) d.Boost();
                 }
                 Call(g, "Update", 0.04);
                 if (step % 50 == 0 && step >= 100)

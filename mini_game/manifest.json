@@ -92,7 +92,7 @@
         }
       ],
       "SupportedInMultiActions": false,
-      "Tooltip": "Retro arcade racing on the touch strip. Rotate dial to steer, hold dial to brake.",
+      "Tooltip": "Retro arcade racing on the touch strip. Rotate dial to steer, press dial to boost (3 per race).",
       "UUID": "com.odiestudio.minigame.racer",
       "PropertyInspectorPath": "PropertyInspector/Racer/index.html",
       "Controllers": [ "Encoder" ],
@@ -102,7 +102,7 @@
         "StackColor": "#FF8C20",
         "TriggerDescription": {
           "Rotate": "Steer",
-          "Push": "Start / hold to brake",
+          "Push": "Start / boost",
           "Touch": "Pause / resume",
           "LongTouch": "Back to title"
         }
@@ -119,7 +119,7 @@
         }
       ],
       "SupportedInMultiActions": false,
-      "Tooltip": "4-player split-screen race. Put it on all 4 dials: dial n is player n. Press to join, rotate to steer, hold to brake.",
+      "Tooltip": "4-player split-screen race. Put it on all 4 dials: dial n is player n. Press to join, rotate to steer, press to boost (3 per race).",
       "UUID": "com.odiestudio.minigame.racer4p",
       "PropertyInspectorPath": "PropertyInspector/Racer4P/index.html",
       "Controllers": [ "Encoder" ],
@@ -129,7 +129,7 @@
         "StackColor": "#FF8C20",
         "TriggerDescription": {
           "Rotate": "Steer",
-          "Push": "Join / hold to brake",
+          "Push": "Join / boost",
           "Touch": "Start now / pause",
           "LongTouch": "Back to lobby"
         }

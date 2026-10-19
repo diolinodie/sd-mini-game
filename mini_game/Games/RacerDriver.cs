@@ -25,6 +25,9 @@ namespace MiniGame
         public const double CRASH_TIME = 1.6;
         public const double STEER_CENTER_DELAY = 0.18;     // 停止轉動多久後方向盤開始回正
         public const double STEER_CENTER_RATE = 3.0;
+        public const int BOOSTS = 3;                       // 每場比賽可以加速幾次
+        public const double BOOST_TIME = 1.5;              // 加速維持幾秒
+        public const double BOOST_SPEED = MAX_SPEED * 1.35;
 
         public static readonly Color[] PlayerColors =
         {
@@ -57,7 +60,7 @@ namespace MiniGame
     }
 
     /// <summary>
-    /// 一台玩家車子的狀態與物理：方向盤、油門 / 煞車、離心力、出界、撞景物、撞路上的車。
+    /// 一台玩家車子的狀態與物理：方向盤、油門、加速、離心力、出界、撞景物、撞路上的車。
     /// 呼叫端要自己鎖。
     /// </summary>
     internal sealed class RacerDriver
@@ -67,7 +70,8 @@ namespace MiniGame
         public double Speed;
         public double Steer;              // -1 ~ 1
         public double LastSteerTime = -99;
-        public bool Braking;
+        public int Boosts = RacerConst.BOOSTS;
+        public double BoostTimer;
         public double CrashTimer;
         public double ShakeTimer;
         public double FarOffset, NearOffset;
@@ -86,6 +90,7 @@ namespace MiniGame
         public double Kmh => Speed / RacerConst.MAX_SPEED * RacerConst.TOP_KMH;
         public bool OffRoad => Math.Abs(X) > 1.05;
         public int Lean => Steer < -0.3 ? -1 : Steer > 0.3 ? 1 : 0;
+        public bool Boosting => BoostTimer > 0;
 
         public void Reset(double position = 0, double x = 0)
         {
@@ -93,7 +98,8 @@ namespace MiniGame
             X = x;
             Speed = 0;
             Steer = 0;
-            Braking = false;
+            Boosts = RacerConst.BOOSTS;
+            BoostTimer = 0;
             CrashTimer = 0;
             ShakeTimer = 0;
             FarOffset = NearOffset = 0;
@@ -107,6 +113,17 @@ namespace MiniGame
         {
             Steer = Math.Max(-1, Math.Min(1, Steer + ticks * SteerSens));
             LastSteerTime = now;
+        }
+
+        /// <summary>瞬間加速，翻車中不能用。用掉一次回傳 true</summary>
+        public bool Boost()
+        {
+            if (Boosts <= 0 || CrashTimer > 0) return false;
+            Boosts--;
+            BoostTimer = RacerConst.BOOST_TIME;
+            Speed = RacerConst.BOOST_SPEED;
+            ShakeTimer = 0.2;
+            return true;
         }
 
         public void ShowMessage(string m1, string m2, double seconds)
@@ -156,15 +173,24 @@ namespace MiniGame
                 // 彎道把車往外甩
                 X -= dt * speedPct * speedPct * seg.Curve * RacerConst.CENTRIFUGAL;
 
-                if (Braking)
-                    Speed -= MAX * 0.9 * dt;
+                if (BoostTimer > 0)
+                {
+                    // 加速中維持超過極速
+                    BoostTimer -= dt;
+                    Speed = Math.Max(Speed, RacerConst.BOOST_SPEED * 0.9);
+                }
+                else if (Speed > MAX)
+                    Speed = Math.Max(MAX, Speed - MAX * 0.6 * dt);  // 加速完慢慢降回極速
                 else if (canAccel)
                     Speed += MAX * (0.22 - 0.12 * speedPct) * dt;   // 0 到極速大約 6.5 秒
                 else
                     Speed -= MAX * coastDecel * dt;
 
                 if (OffRoad && Speed > RacerConst.OFFROAD_LIMIT)
+                {
+                    BoostTimer = 0;
                     Speed = Math.Max(RacerConst.OFFROAD_LIMIT, Speed - MAX * 0.7 * dt);
+                }
 
                 if (OffRoad)
                     CheckSpriteHit(seg);
@@ -172,7 +198,7 @@ namespace MiniGame
             }
 
             X = Math.Max(-2.6, Math.Min(2.6, X));
-            Speed = Math.Max(0, Math.Min(MAX, Speed));
+            Speed = Math.Max(0, Math.Min(RacerConst.BOOST_SPEED, Speed));
 
             double segMoved = (Position - startPos) / RacerConst.SEG_LEN;
             FarOffset += seg.Curve * segMoved * 0.12;
@@ -205,7 +231,7 @@ namespace MiniGame
         {
             CrashTimer = RacerConst.CRASH_TIME;
             Speed = 0;
-            Braking = false;
+            BoostTimer = 0;
             ShakeTimer = 0.5;
         }
 
@@ -250,6 +276,7 @@ namespace MiniGame
                 else
                 {
                     Speed = car.Speed * 0.7;
+                    BoostTimer = 0;
                     ShakeTimer = 0.4;
                 }
                 Position = car.Z - RacerConst.PLAYER_Z - RacerConst.SEG_LEN * 0.3;

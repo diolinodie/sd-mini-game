@@ -9,7 +9,7 @@ namespace MiniGame
 {
     /// <summary>
     /// 單人版復古街機風格賽車，畫在一格觸控條 200x100 上。
-    /// 油門自動踩，轉旋鈕 = 方向盤，按住旋鈕 = 煞車。
+    /// 油門自動踩，轉旋鈕 = 方向盤，按旋鈕 = 瞬間加速（每場 3 次）。
     /// 五關各有不同景色，每關結尾的檢查點加時間，時間用完就結束，跑完第五關到終點。
     /// 車子物理在 RacerDriver，畫面在 RacerRenderer。
     /// </summary>
@@ -141,7 +141,7 @@ namespace MiniGame
             if (render) Render();
         }
 
-        /// <summary>旋鈕按下：開始 / 繼續 / 煞車</summary>
+        /// <summary>旋鈕按下：開始 / 繼續 / 加速</summary>
         public void Press()
         {
             lock (sync)
@@ -156,17 +156,13 @@ namespace MiniGame
                     case GameState.Paused:
                         Resume();
                         break;
-                    default:
-                        driver.Braking = true;
+                    case GameState.Playing:
+                        if (driver.Boost())
+                            driver.ShowMessage("BOOST!", null, 0.8);
                         break;
                 }
             }
             Render();
-        }
-
-        public void ReleasePress()
-        {
-            lock (sync) { driver.Braking = false; }
         }
 
         /// <summary>觸控條點一下：暫停 / 繼續 / 開始</summary>
@@ -187,7 +183,6 @@ namespace MiniGame
                     default:
                         pausedFrom = state;
                         state = GameState.Paused;
-                        driver.Braking = false;
                         StopTimer();
                         break;
                 }
@@ -324,7 +319,7 @@ namespace MiniGame
                     timeLeft = 0;
                     state = GameState.TimeUp;
                     stateTimer = 0;
-                    driver.Braking = false;
+                    driver.BoostTimer = 0;
                     Logger.Instance.LogMessage(TracingLevel.INFO, $"racer, time up score={score} stage={driver.Stage + 1}");
                 }
             }
@@ -354,7 +349,7 @@ namespace MiniGame
                 score += timeBonus;
                 state = GameState.Goal;
                 stateTimer = 0;
-                driver.Braking = false;
+                driver.BoostTimer = 0;
                 driver.ShowMessage("GOAL!", $"TIME BONUS {timeBonus}", 99);
                 Logger.Instance.LogMessage(TracingLevel.INFO, $"racer, goal score={score} timeLeft={timeLeft:F1}");
                 return;
@@ -415,6 +410,7 @@ namespace MiniGame
 
                 r.StageBar($"STAGE {Math.Min(driver.Stage, STAGES - 1) + 1}", driver.StageProgress(track));
                 r.Speedo(driver.Kmh);
+                r.BoostPips(driver, Now());
             }
 
             switch (state)

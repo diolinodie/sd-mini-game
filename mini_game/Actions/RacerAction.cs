@@ -8,7 +8,7 @@ namespace MiniGame
 {
     /// <summary>
     /// 復古街機風格賽車，一顆旋鈕就能玩。
-    /// 轉動 = 方向盤，按住旋鈕 = 煞車（油門自動），觸控條點一下 = 暫停 / 繼續，長按 = 回標題。
+    /// 轉動 = 方向盤，按旋鈕 = 瞬間加速（油門自動，每場 3 次），觸控條點一下 = 暫停 / 繼續，長按 = 回標題。
     /// 遊戲本體在 RacerGame。
     /// </summary>
     [PluginActionId("com.odiestudio.minigame.racer")]
@@ -92,10 +92,7 @@ namespace MiniGame
             game.Press();
         }
 
-        public override void DialUp(DialPayload payload)
-        {
-            game.ReleasePress();
-        }
+        public override void DialUp(DialPayload payload) { }
 
         public override void TouchPress(TouchpadPressPayload payload)
         {
@@ -111,10 +108,7 @@ namespace MiniGame
             game.Press();
         }
 
-        public override void KeyReleased(KeyPayload payload)
-        {
-            game.ReleasePress();
-        }
+        public override void KeyReleased(KeyPayload payload) { }
 
         public override void OnTick() { }
 
