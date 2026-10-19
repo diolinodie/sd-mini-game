@@ -13,7 +13,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Breakout game on the touch strip. Rotate dial to move the paddle, press to start.",
-      "UUID": "com.odiestudio.minigame.dev.breakout",
+      "UUID": "com.odiestudio.minigame.breakout",
       "PropertyInspectorPath": "PropertyInspector/Breakout/index.html",
       "Controllers": [
         "Encoder"
@@ -41,7 +41,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Snake game on the touch strip. Rotate dial to turn, press to start.",
-      "UUID": "com.odiestudio.minigame.dev.snake",
+      "UUID": "com.odiestudio.minigame.snake",
       "PropertyInspectorPath": "PropertyInspector/Snake/index.html",
       "Controllers": [
         "Encoder"
@@ -69,7 +69,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "2-player foosball across the whole touch strip. Put it on all 4 dials: RED uses dial 1 + 3, BLUE uses dial 2 + 4.",
-      "UUID": "com.odiestudio.minigame.dev.foosball",
+      "UUID": "com.odiestudio.minigame.foosball",
       "PropertyInspectorPath": "PropertyInspector/Foosball/index.html",
       "Controllers": [
         "Encoder"
@@ -97,7 +97,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Retro arcade racing on the touch strip. Rotate dial to steer, press dial to boost (3 per race).",
-      "UUID": "com.odiestudio.minigame.dev.racer",
+      "UUID": "com.odiestudio.minigame.racer",
       "PropertyInspectorPath": "PropertyInspector/Racer/index.html",
       "Controllers": [
         "Encoder"
@@ -125,7 +125,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "4-player split-screen race. Put it on all 4 dials: dial n is player n. Press to join, rotate to steer, press to boost (3 per race).",
-      "UUID": "com.odiestudio.minigame.dev.racer4p",
+      "UUID": "com.odiestudio.minigame.racer4p",
       "PropertyInspectorPath": "PropertyInspector/Racer4P/index.html",
       "Controllers": [
         "Encoder"
@@ -153,7 +153,7 @@
       ],
       "SupportedInMultiActions": false,
       "Tooltip": "Live track map for Sunset Racer / Racer 4P. Put it on several keys and they join into one big map. Press to zoom on the leader.",
-      "UUID": "com.odiestudio.minigame.dev.racermap",
+      "UUID": "com.odiestudio.minigame.racermap",
       "Controllers": [
         "Keypad"
       ]
@@ -162,11 +162,11 @@
   "Author": "odie studio",
   "Description": "Retro arcade games for the Stream Deck+ dials and touch strip",
   "URL": "https://github.com/diolinodie/sd-mini-game",
-  "Name": "Sunset Arcade (Node)",
+  "Name": "Sunset Arcade",
   "Icon": "Images/pluginIcon",
   "Version": "2.0.0.0",
   "CodePath": "bin/plugin.js",
-  "Category": "Sunset Arcade (Node)",
+  "Category": "Sunset Arcade",
   "CategoryIcon": "Images/categoryIcon",
   "OS": [
     {
@@ -186,5 +186,5 @@
   "Software": {
     "MinimumVersion": "7.1"
   },
-  "UUID": "com.odiestudio.minigame.dev"
+  "UUID": "com.odiestudio.minigame"
 }

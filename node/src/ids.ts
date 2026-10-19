@@ -1,6 +1,5 @@
 /**
- * 外掛 UUID。開發期間用 .dev，才能跟已安裝的 C# 版並排比較；
- * 正式發布時換回 com.odiestudio.minigame（manifest.json 跟資料夾名稱也要一起換），
- * 這樣 action UUID 跟 C# 版一致，老用戶的設定和最高分才會保留。
+ * 外掛 UUID，manifest.json 跟 .sdPlugin 資料夾名稱要一致。
+ * 跟 C# 版相同，action UUID 也就相同，老用戶升級後設定和最高分才會保留，不要改。
  */
-export const PLUGIN_UUID = "com.odiestudio.minigame.dev";
+export const PLUGIN_UUID = "com.odiestudio.minigame";

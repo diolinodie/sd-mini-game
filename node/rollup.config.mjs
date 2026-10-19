@@ -6,7 +6,7 @@ import path from "node:path";
 import url from "node:url";
 
 const isWatching = !!process.env.ROLLUP_WATCH;
-const sdPlugin = "com.odiestudio.minigame.dev.sdPlugin";
+const sdPlugin = "com.odiestudio.minigame.sdPlugin";
 
 /**
  * @type {import('rollup').RollupOptions}
