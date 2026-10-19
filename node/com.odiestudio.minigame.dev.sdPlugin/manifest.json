@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schemas.elgato.com/streamdeck/plugins/manifest.json",
+  "Actions": [
+    {
+      "Icon": "Images/actions/snake",
+      "Name": "Snake",
+      "States": [
+        {
+          "Image": "Images/snake",
+          "TitleAlignment": "middle",
+          "FontSize": 10
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Snake game on the touch strip. Rotate dial to turn, press to start.",
+      "UUID": "com.odiestudio.minigame.dev.snake",
+      "PropertyInspectorPath": "PropertyInspector/Snake/index.html",
+      "Controllers": [ "Encoder" ],
+      "Encoder": {
+        "layout": "Layouts/snake.json",
+        "StackColor": "#5AD65A",
+        "TriggerDescription": {
+          "Rotate": "Turn left / right",
+          "Push": "Start / pause",
+          "Touch": "Start / pause",
+          "LongTouch": "Restart"
+        }
+      }
+    }
+  ],
+  "Author": "odie studio",
+  "Description": "Retro arcade games for the Stream Deck+ dials and touch strip",
+  "URL": "https://github.com/diolinodie/sd-mini-game",
+  "Name": "Sunset Arcade (Node)",
+  "Icon": "Images/pluginIcon",
+  "Version": "2.0.0.0",
+  "CodePath": "bin/plugin.js",
+  "Category": "Sunset Arcade (Node)",
+  "CategoryIcon": "Images/categoryIcon",
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "12"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "Nodejs": {
+    "Version": "24",
+    "Debug": "enabled"
+  },
+  "SDKVersion": 3,
+  "Software": {
+    "MinimumVersion": "7.1"
+  },
+  "UUID": "com.odiestudio.minigame.dev"
+}
