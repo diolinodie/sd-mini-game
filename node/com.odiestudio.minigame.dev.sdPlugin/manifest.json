@@ -56,6 +56,34 @@
           "LongTouch": "Restart"
         }
       }
+    },
+    {
+      "Icon": "Images/actions/foosball",
+      "Name": "Foosball",
+      "States": [
+        {
+          "Image": "Images/foosball",
+          "TitleAlignment": "middle",
+          "FontSize": 10
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "2-player foosball across the whole touch strip. Put it on all 4 dials: RED uses dial 1 + 3, BLUE uses dial 2 + 4.",
+      "UUID": "com.odiestudio.minigame.dev.foosball",
+      "PropertyInspectorPath": "PropertyInspector/Foosball/index.html",
+      "Controllers": [
+        "Encoder"
+      ],
+      "Encoder": {
+        "layout": "Layouts/foosball.json",
+        "StackColor": "#1F6B32",
+        "TriggerDescription": {
+          "Rotate": "Move rods",
+          "Push": "Kick (hold = lift) / start",
+          "Touch": "Pause / resume",
+          "LongTouch": "Back to title"
+        }
+      }
     }
   ],
   "Author": "odie studio",

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover">
+    <meta name=apple-mobile-web-app-capable content=yes>
+    <meta name=apple-mobile-web-app-status-bar-style content=black>
+    <title>Sunset Arcade - Foosball</title>
+    <link rel="stylesheet" href="../sdpi.css">
+    <script src="../sdtools.common.js"></script>
+</head>
+<body>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Rod Speed</div>
+            <select class="sdpi-item-value select sdProperty" id="rodStep" oninput="setSettings()">
+                <option value="2">slow (2 px / tick)</option>
+                <option value="3">medium (3 px / tick)</option>
+                <option value="4" selected>normal (4 px / tick)</option>
+                <option value="6">fast (6 px / tick)</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item" style="height:30px;line-height:30px;">
+            <div class="sdpi-item-label">Goals to Win</div>
+            <select class="sdpi-item-value select sdProperty" id="goalsToWin" oninput="setSettings()">
+                <option value="3">3</option>
+                <option value="5" selected>5</option>
+                <option value="7">7</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">How to play</div>
+            <details class="sdpi-item-value">
+                <summary>Controls</summary>
+                <p>Put Foosball on all 4 dials.<br>
+                   RED: dial 1 + 3, BLUE: dial 2 + 4<br>
+                   Rotate: move rods up / down<br>
+                   Press dial: kick<br>
+                   Hold dial: lift players (ball passes under)<br>
+                   Tap strip: pause / resume<br>
+                   Long press strip: back to title<br>
+                   Goals to Win is shared, the last change wins.</p>
+            </details>
+        </div>
+    </div>
+</body>
+</html>

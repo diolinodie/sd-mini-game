@@ -195,6 +195,7 @@ export class BreakoutGame implements DialGame {
 		this.stopTimer();
 		if (this.disposed) return;
 		this.timer = setInterval(() => this.onFrame(), FRAME_MS);
+		this.onFrame();
 	}
 
 	private stopTimer(): void {

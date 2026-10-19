@@ -43,5 +43,7 @@ export const Colors = {
 	Gray: hex(0x808080),
 	Gold: hex(0xffd700),
 	OrangeRed: hex(0xff4500),
+	Orange: hex(0xffa500),
+	LightGray: hex(0xd3d3d3),
 	Transparent: hex(0x000000, 0),
 } as const;
