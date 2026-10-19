@@ -1,6 +1,6 @@
 {
   "name": "sunset-arcade",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Sunset Arcade Stream Deck+ plugin, Node.js version",
   "license": "MIT",
