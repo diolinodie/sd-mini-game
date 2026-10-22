@@ -57,16 +57,25 @@ namespace MiniGame
 
         static Font F(float px, FontStyle st = FontStyle.Regular, string fam = "Segoe UI") => new Font(fam, px, st, GraphicsUnit.Pixel);
 
-        static void Title(Graphics g, string title, string sub, float x = 120, float y = 56)
+        // 標題 + 副標題，副標題超過 maxW 會自動換行
+        static void Title(Graphics g, string title, string sub, float x = 120, float y = 56, float maxW = 1600)
         {
             using (var f = F(64, FontStyle.Regular, "Segoe UI Black"))
             using (var b = new SolidBrush(Color.White))
                 g.DrawString(title, f, b, x, y);
             using (var f = F(30))
             using (var b = new SolidBrush(Text2))
-                g.DrawString(sub, f, b, x + 4, y + 92);
+                g.DrawString(sub, f, b, new RectangleF(x + 4, y + 92, maxW, 200));
             using (var b = new LinearGradientBrush(new RectangleF(x + 4, y - 18, 160, 8), Orange, Pink, 0f))
                 g.FillRectangle(b, x + 4, y - 18, 160, 8);
+        }
+
+        static void Caption(Graphics g, string text, float x, float y, float w)
+        {
+            using (var f = F(22, FontStyle.Bold))
+            using (var b = new SolidBrush(Dim))
+            using (var fmt = new StringFormat { Alignment = StringAlignment.Center })
+                g.DrawString(text, f, b, new RectangleF(x, y, w, 40), fmt);
         }
 
         static GraphicsPath Round(RectangleF r, float rad)
@@ -93,40 +102,80 @@ namespace MiniGame
             g.PixelOffsetMode = po;
         }
 
-        // 觸控條 + 下面四顆旋鈕，scale 2 時觸控條 1600x200
-        static void Strip(Graphics g, Image strip, float top, string[] labels = null, Color[] colors = null)
+        static void Dial(Graphics g, float cx, float cy, float r)
         {
-            float sw = 1600, sh = 200, x = (W - sw) / 2;
-            using (var body = Round(new RectangleF(x - 28, top - 28, sw + 56, sh + 290), 36))
+            using (var sh = new SolidBrush(Color.FromArgb(90, 0, 0, 0))) g.FillEllipse(sh, cx - r + 4, cy - r + 8, r * 2, r * 2);
+            using (var b = new LinearGradientBrush(new RectangleF(cx - r, cy - r, r * 2, r * 2), Color.FromArgb(0x5A, 0x5A, 0x64), Color.FromArgb(0x22, 0x22, 0x28), 60f))
+                g.FillEllipse(b, cx - r, cy - r, r * 2, r * 2);
+            using (var b = new LinearGradientBrush(new RectangleF(cx - r, cy - r, r * 2, r * 2), Color.FromArgb(0x34, 0x34, 0x3C), Color.FromArgb(0x40, 0x40, 0x48), 60f))
+                g.FillEllipse(b, cx - r + 10, cy - r + 10, r * 2 - 20, r * 2 - 20);
+            using (var p = new Pen(Color.FromArgb(0xB0, 0xB0, 0xBC), 4) { StartCap = LineCap.Round, EndCap = LineCap.Round })
+                g.DrawLine(p, cx, cy - r + 16, cx, cy - r + 34);
+        }
+
+        // 完整的 Stream Deck+，1:1 比例（觸控條 800x100）：上面 4x2 顆按鍵、中間觸控條、下面四顆旋鈕
+        const float Key = 170, KeyGap = 40, Bez = 36, StripW = 800, StripH = 100, DialR = 75;
+        const float DevW = StripW + 2 * Bez;                               // 872
+        const float KeysH = 2 * Key + KeyGap;                              // 380
+        const float DevH = Bez + KeysH + 34 + StripH + 36 + 2 * DialR + 70; // 806
+
+        // keys：4x2 顆按鍵的畫面，每顆 144x144，可為 null（按鍵全黑）
+        static void Device(Graphics g, float x, float y, Image strip, Image keys = null, string[] labels = null, Color[] colors = null)
+        {
+            using (var body = Round(new RectangleF(x, y, DevW, DevH), 40))
             {
-                using (var b = new LinearGradientBrush(new RectangleF(x, top - 30, sw, sh + 320), Color.FromArgb(0x2C, 0x2C, 0x34), Color.FromArgb(0x16, 0x16, 0x1C), 90f))
+                using (var sh = new SolidBrush(Color.FromArgb(120, 0, 0, 0)))
+                using (var shp = Round(new RectangleF(x + 8, y + 16, DevW, DevH), 40))
+                    g.FillPath(sh, shp);
+                using (var b = new LinearGradientBrush(new RectangleF(x, y, DevW, DevH), Color.FromArgb(0x2C, 0x2C, 0x34), Color.FromArgb(0x16, 0x16, 0x1C), 90f))
                     g.FillPath(b, body);
                 using (var p = new Pen(Color.FromArgb(0x46, 0x46, 0x52), 2)) g.DrawPath(p, body);
             }
-            g.FillRectangle(Brushes.Black, x - 4, top - 4, sw + 8, sh + 8);
-            Pixel(g, strip, x, top, sw, sh);
 
+            // 按鍵
+            for (int r = 0; r < 2; r++)
+                for (int c = 0; c < 4; c++)
+                {
+                    float kx = x + Bez + c * (Key + KeyGap), ky = y + Bez + r * (Key + KeyGap);
+                    using (var path = Round(new RectangleF(kx, ky, Key, Key), 22))
+                    {
+                        using (var b = new SolidBrush(Color.FromArgb(0x08, 0x08, 0x0A))) g.FillPath(b, path);
+                        if (keys != null)
+                        {
+                            var st = g.Save();
+                            g.SetClip(path);
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.DrawImage(keys, new RectangleF(kx, ky, Key, Key), new RectangleF(c * 144, r * 144, 144, 144), GraphicsUnit.Pixel);
+                            g.Restore(st);
+                        }
+                        using (var p = new Pen(Color.FromArgb(0x3A, 0x3A, 0x44), 2)) g.DrawPath(p, path);
+                    }
+                }
+
+            // 觸控條
+            float sx = x + Bez, sy = y + Bez + KeysH + 34;
+            g.FillRectangle(Brushes.Black, sx - 4, sy - 4, StripW + 8, StripH + 8);
+            Pixel(g, strip, sx, sy, StripW, StripH);
+
+            // 旋鈕
+            float cy = sy + StripH + 36 + DialR;
             for (int i = 0; i < 4; i++)
             {
-                float cx = x + 200 + i * 400, cy = top + sh + 104, r = 62;
-                using (var sh2 = new SolidBrush(Color.FromArgb(90, 0, 0, 0))) g.FillEllipse(sh2, cx - r + 4, cy - r + 8, r * 2, r * 2);
-                using (var b = new LinearGradientBrush(new RectangleF(cx - r, cy - r, r * 2, r * 2), Color.FromArgb(0x5A, 0x5A, 0x64), Color.FromArgb(0x22, 0x22, 0x28), 60f))
-                    g.FillEllipse(b, cx - r, cy - r, r * 2, r * 2);
-                using (var b = new LinearGradientBrush(new RectangleF(cx - r, cy - r, r * 2, r * 2), Color.FromArgb(0x34, 0x34, 0x3C), Color.FromArgb(0x40, 0x40, 0x48), 60f))
-                    g.FillEllipse(b, cx - r + 10, cy - r + 10, r * 2 - 20, r * 2 - 20);
-                using (var p = new Pen(Color.FromArgb(0xB0, 0xB0, 0xBC), 4) { StartCap = LineCap.Round, EndCap = LineCap.Round })
-                    g.DrawLine(p, cx, cy - r + 16, cx, cy - r + 34);
-
+                float cx = sx + 100 + i * 200;
+                Dial(g, cx, cy, DialR);
                 if (labels != null && labels[i] != null)
                 {
                     Color c = colors != null ? colors[i] : Color.White;
-                    using (var f = F(26, FontStyle.Bold))
+                    using (var f = F(22, FontStyle.Bold))
                     using (var b = new SolidBrush(c))
                     using (var fmt = new StringFormat { Alignment = StringAlignment.Center })
-                        g.DrawString(labels[i], f, b, cx, cy + r + 18, fmt);
+                        g.DrawString(labels[i], f, b, cx, cy + DialR + 14, fmt);
                 }
             }
         }
+
+        // 右邊放裝置，左邊放標題和 2 倍大的觸控條特寫
+        const float DevX = W - 60 - DevW, DevY = (H - DevH) / 2, LeftW = 800;
 
         static void Card(Graphics g, Image img, float x, float y, float w, float h, float rad = 14)
         {
@@ -197,27 +246,16 @@ namespace MiniGame
         {
             var bmp = new Bitmap(W, H);
             var g = Begin(bmp);
-            Title(g, "4-player split-screen racing", "Every dial is a player. Press to join, rotate to steer, press to boost.");
-
+            Title(g, "4-player racing", "Split-screen on the touch strip, one player per dial. Press to join, rotate to steer, press to boost (3 per race).", maxW: LeftW);
+            using (var race = Img("race_20"))
             using (var map = Img("map_20"))
             {
-                // 8 顆按鍵 = 一張大地圖
-                float kx = 1180, ky = 44, k = 144, gap = 12;
-                using (var f = F(22, FontStyle.Bold))
-                using (var b = new SolidBrush(Dim))
-                    g.DrawString("LIVE RACE MAP ON THE KEYS", f, b, kx, ky + 2 * k + gap + 10);
-                for (int r = 0; r < 2; r++)
-                    for (int c = 0; c < 4; c++)
-                    {
-                        using (var tile = new Bitmap(144, 144))
-                        {
-                            using (var tg = Graphics.FromImage(tile)) tg.DrawImage(map, new Rectangle(0, 0, 144, 144), new Rectangle(c * 144, r * 144, 144, 144), GraphicsUnit.Pixel);
-                            Card(g, tile, kx + c * (k + gap), ky + r * (k + gap), k, k, 18);
-                        }
-                    }
+                using (var a = Crop(race, 0, 400)) Card(g, a, 120, 330, 800, 200);
+                using (var b = Crop(race, 400, 400)) Card(g, b, 120, 570, 800, 200);
+                Caption(g, "TOUCH STRIP, 2X", 120, 790, 800);
+                Device(g, DevX, DevY, race, map, new[] { "P1", "P2", "P3", "P4" }, RacerConst.PlayerColors);
+                Caption(g, "RACER MAP ON THE KEYS: LIVE POSITIONS AND RANKING", DevX, DevY + DevH + 22, DevW);
             }
-            using (var race = Img("race_20"))
-                Strip(g, race, 420, new[] { "P1", "P2", "P3", "P4" }, RacerConst.PlayerColors);
             End(g, bmp, "gallery-1-racer-4p");
         }
 
@@ -226,10 +264,15 @@ namespace MiniGame
         {
             var bmp = new Bitmap(W, H);
             var g = Begin(bmp);
-            Title(g, "2-player foosball", "One table across the whole touch strip. Rotate to slide the rods, press to kick.");
+            Title(g, "2-player foosball", "One table across the whole touch strip. Red plays dials 1 and 3, blue plays dials 2 and 4. Rotate to slide the rods, press to kick, hold to lift.", maxW: LeftW);
             Color red = Color.FromArgb(0xFF, 0x5A, 0x5A), blue = Color.FromArgb(0x6A, 0xA8, 0xFF);
             using (var fo = Img("foosball"))
-                Strip(g, fo, 330,new[] { "RED", "BLUE", "RED", "BLUE" }, new[] { red, blue, red, blue });
+            {
+                using (var a = Crop(fo, 0, 400)) Card(g, a, 120, 330, 800, 200);
+                using (var b = Crop(fo, 400, 400)) Card(g, b, 120, 570, 800, 200);
+                Caption(g, "TOUCH STRIP, 2X", 120, 790, 800);
+                Device(g, DevX, DevY, fo, null, new[] { "RED", "BLUE", "RED", "BLUE" }, new[] { red, blue, red, blue });
+            }
             End(g, bmp, "gallery-2-foosball");
         }
 
@@ -238,7 +281,7 @@ namespace MiniGame
         {
             var bmp = new Bitmap(W, H);
             var g = Begin(bmp);
-            Title(g, "One dial, one game", "Breakout, Snake and Sunset Racer each run on a single dial. Mix and match.");
+            Title(g, "One dial, one game", "Breakout, Snake and Sunset Racer each run on a single dial. Mix and match across the four dials.", maxW: LeftW);
             using (var strip = new Bitmap(800, 100))
             {
                 using (var sg = Graphics.FromImage(strip))
@@ -249,7 +292,12 @@ namespace MiniGame
                     using (var p = new Pen(Color.FromArgb(0x3A, 0x3A, 0x44), 1))
                         for (int i = 1; i < 4; i++) sg.DrawLine(p, i * 200 - 0.5f, 0, i * 200 - 0.5f, 100);
                 }
-                Strip(g, strip, 330, new[] { "Breakout", "Snake", "Sunset Racer", "Sunset Racer" }, new[] { Color.White, Color.White, Color.White, Color.White });
+                using (var br = Img("breakout")) Card(g, br, 120, 330, 400, 200);
+                using (var sn = Img("snake")) Card(g, sn, 120, 570, 400, 200);
+                using (var st = Img("stage_1")) Card(g, st, 560, 330, 400, 200);
+                using (var st = Img("stage_4")) Card(g, st, 560, 570, 400, 200);
+                Caption(g, "TOUCH STRIP, 2X", 120, 790, 840);
+                Device(g, DevX, DevY, strip, null, new[] { "Breakout", "Snake", "Sunset Racer", "Sunset Racer" }, new[] { Color.White, Color.White, Color.White, Color.White });
             }
             End(g, bmp, "gallery-3-classics");
         }
@@ -259,7 +307,7 @@ namespace MiniGame
         {
             var bmp = new Bitmap(W, H);
             var g = Begin(bmp);
-            Title(g, "Five stages to the goal", "Sunset Racer is a pseudo-3D arcade racer with hills, curves and traffic.");
+            Title(g, "Five stages to the goal", "Sunset Racer is a pseudo-3D arcade racer with hills, curves and traffic. Reach each checkpoint before time runs out.");
             string[] names = { "PALM BEACH", "SUNSET COAST", "DESERT", "ALPINE PASS", "AUTUMN ROAD" };
             float w = 400, h = 200, gap = 44;
             for (int s = 0; s < 5; s++)
