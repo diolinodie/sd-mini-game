@@ -1,6 +1,6 @@
 # Sunset Arcade, Node.js version
 
-Port of the C# plugin in `../mini_game/` to the official Elgato Node.js SDK (`@elgato/streamdeck`). Work in progress on the `node-port` branch.
+Port of the C# plugin in `../mini_game/` to the official Elgato Node.js SDK (`@elgato/streamdeck`). This is the released version on `main`; the C# version stays on the `c#` branch.
 
 | Game | Status |
 |---|---|

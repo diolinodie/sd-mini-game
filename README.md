@@ -11,43 +11,44 @@ Mini games for the Elgato **Stream Deck+**, played on the dials, the touch strip
 | **Sunset Racer 4P** | all 4 dials | 4-player split-screen race, dial n is player Pn. Press to join, the race starts 10 s after the first join |
 | **Racer Map** | keys | Live top-down map of the race with positions and ranking. Put it on several keys and they join into one big map. Press to zoom on the leader |
 
-All graphics are drawn at runtime with GDI+. There are no image assets except the action icons.
+All graphics are drawn at runtime as SVG. There are no image assets except the action icons.
 
-## Build
+## Layout
 
-Requirements: Windows 10+, .NET Framework 4.8, Visual Studio 2022 or the .NET SDK.
+| Path | What |
+|---|---|
+| `node/` | The plugin, built on the official Elgato Node.js SDK. This is the version on the Marketplace. See [node/README.md](node/README.md) for the source layout |
+| `mini_game/` | The original C# (.NET Framework 4.8) plugin. No longer maintained on `main`; the `c#` branch has its last release. The game code is still used by `tools/shots` to render the Marketplace images |
+| `marketplace/` | Marketplace name, description, release notes and images, see `marketplace/listing.md` |
+| `tools/` | Icon and screenshot generators |
+
+## Build and install
+
+Requirements: Node.js 20+, Stream Deck 7.1+ on Windows 10+ or macOS 12+.
 
 ```
-dotnet build sd-mini-game.sln -c Release
+cd node
+npm install
+npm run build
+npx streamdeck link com.odiestudio.minigame.sdPlugin   # once, links the folder into Stream Deck
+npx streamdeck restart com.odiestudio.minigame
 ```
 
-The output is in `mini_game/bin/Release/net48/`.
-
-## Install
-
-1. Quit the Stream Deck app.
-2. Copy everything in `mini_game/bin/Release/net48/` to
-   `%APPDATA%\Elgato\StreamDeck\Plugins\com.odiestudio.minigame.sdPlugin\`.
-3. Start the Stream Deck app. The actions are listed under **Sunset Arcade**.
+The actions are listed under **Sunset Arcade**. `npm run watch` rebuilds and restarts the plugin on every change, `npm run validate` checks the manifest, and `npx streamdeck pack com.odiestudio.minigame.sdPlugin` writes the `.streamDeckPlugin` file to `node/dist/`.
 
 ## Tools
 
 | Tool | What it does |
 |---|---|
-| `tools/make-icons.ps1` | Draws the category, action list and plugin icons into `mini_game/Images/`, and the 288 px store icon into `marketplace/` |
-| `tools/shots/` | Renders real game frames with the game code and lays them out as the Marketplace thumbnail and gallery images in `marketplace/`. Run `dotnet run -c Release` in that folder |
-
-The Marketplace name, description and image list are in `marketplace/listing.md`.
+| `tools/make-icons.ps1` | Draws the category, action list and plugin icons into `mini_game/Images/`, and the 288 px store icon into `marketplace/`. Copy the icons to `node/com.odiestudio.minigame.sdPlugin/Images/` afterwards |
+| `tools/shots/` | Renders real game frames with the C# game code and lays them out as the Marketplace thumbnail and gallery images in `marketplace/`. Needs the .NET SDK on Windows. Run `dotnet run -c Release` in that folder |
 
 ## Third-party libraries
 
 | Library | License |
 |---|---|
-| [StreamDeck-Tools](https://github.com/BarRaider/streamdeck-tools) | MIT |
-| [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) | MIT |
-| [Fody](https://github.com/Fody/Fody) / [Costura.Fody](https://github.com/Fody/Costura) | MIT |
-| [NLog](https://github.com/NLog/NLog) (via StreamDeck-Tools) | BSD-3-Clause |
-| [CommandLineParser](https://github.com/commandlineparser/commandline) (via StreamDeck-Tools) | MIT |
+| [@elgato/streamdeck](https://github.com/elgatosf/streamdeck) | MIT |
+| [@elgato/utils](https://github.com/elgatosf/utils) | MIT |
 
 ## License
 
