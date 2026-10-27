@@ -332,3 +332,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+# Official Elgato Stream Deck+ render (Figma Stream Deck Templates), not ours to redistribute
+tools/shots/stream-deck-plus.png

@@ -102,80 +102,68 @@ namespace MiniGame
             g.PixelOffsetMode = po;
         }
 
-        static void Dial(Graphics g, float cx, float cy, float r)
-        {
-            using (var sh = new SolidBrush(Color.FromArgb(90, 0, 0, 0))) g.FillEllipse(sh, cx - r + 4, cy - r + 8, r * 2, r * 2);
-            using (var b = new LinearGradientBrush(new RectangleF(cx - r, cy - r, r * 2, r * 2), Color.FromArgb(0x5A, 0x5A, 0x64), Color.FromArgb(0x22, 0x22, 0x28), 60f))
-                g.FillEllipse(b, cx - r, cy - r, r * 2, r * 2);
-            using (var b = new LinearGradientBrush(new RectangleF(cx - r, cy - r, r * 2, r * 2), Color.FromArgb(0x34, 0x34, 0x3C), Color.FromArgb(0x40, 0x40, 0x48), 60f))
-                g.FillEllipse(b, cx - r + 10, cy - r + 10, r * 2 - 20, r * 2 - 20);
-            using (var p = new Pen(Color.FromArgb(0xB0, 0xB0, 0xBC), 4) { StartCap = LineCap.Round, EndCap = LineCap.Round })
-                g.DrawLine(p, cx, cy - r + 16, cx, cy - r + 34);
-        }
+        // 官方的 Stream Deck+ 正面圖（Figma 的 Stream Deck Templates 匯出，1024x972），版權是 Elgato 的，不放進 git
+        // 以下座標都是量原圖得來的
+        const string DevFile = "stream-deck-plus.png";
+        const float SrcW = 1024, SrcH = 972;
+        static readonly float[] SrcKeyX = { 117, 341, 565, 789 }, SrcKeyY = { 84, 236 };
+        const float SrcKey = 118, SrcKeyR = 12;
+        const float SrcStripX = 66, SrcStripY = 410, SrcStripW = 890, SrcStripH = 192;
+        static readonly float[] SrcDialX = { 175, 400, 624, 848 };
+        const float SrcDialY = 771, SrcDialR = 56;
 
-        // 完整的 Stream Deck+，1:1 比例（觸控條 800x100）：上面 4x2 顆按鍵、中間觸控條、下面四顆旋鈕
-        const float Key = 170, KeyGap = 40, Bez = 36, StripW = 800, StripH = 100, DialR = 75;
-        const float DevW = StripW + 2 * Bez;                               // 872
-        const float KeysH = 2 * Key + KeyGap;                              // 380
-        const float DevH = Bez + KeysH + 34 + StripH + 36 + 2 * DialR + 70; // 806
+        // 縮放到觸控條剛好 800px 寬，遊戲畫面 1:1 不失真
+        const float DevS = 800 / SrcStripW;
+        const float DevW = SrcW * DevS, DevH = SrcH * DevS; // 920 x 874
 
-        // keys：4x2 顆按鍵的畫面，每顆 144x144，可為 null（按鍵全黑）
+        static Bitmap DevImg;
+
+        // keys：4x2 顆按鍵的畫面，每顆 144x144，可為 null（按鍵保持原圖的黑色）
         static void Device(Graphics g, float x, float y, Image strip, Image keys = null, string[] labels = null, Color[] colors = null)
         {
-            using (var body = Round(new RectangleF(x, y, DevW, DevH), 40))
+            if (DevImg == null)
             {
-                using (var sh = new SolidBrush(Color.FromArgb(120, 0, 0, 0)))
-                using (var shp = Round(new RectangleF(x + 8, y + 16, DevW, DevH), 40))
-                    g.FillPath(sh, shp);
-                using (var b = new LinearGradientBrush(new RectangleF(x, y, DevW, DevH), Color.FromArgb(0x2C, 0x2C, 0x34), Color.FromArgb(0x16, 0x16, 0x1C), 90f))
-                    g.FillPath(b, body);
-                using (var p = new Pen(Color.FromArgb(0x46, 0x46, 0x52), 2)) g.DrawPath(p, body);
+                string path = Path.Combine(Root, "tools", "shots", DevFile);
+                if (!File.Exists(path))
+                    throw new FileNotFoundException("Export the Stream Deck+ from Elgato's Figma Stream Deck Templates as PNG and save it here", path);
+                DevImg = new Bitmap(path);
             }
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.DrawImage(DevImg, x, y, DevW, DevH);
 
             // 按鍵
-            for (int r = 0; r < 2; r++)
-                for (int c = 0; c < 4; c++)
-                {
-                    float kx = x + Bez + c * (Key + KeyGap), ky = y + Bez + r * (Key + KeyGap);
-                    using (var path = Round(new RectangleF(kx, ky, Key, Key), 22))
-                    {
-                        using (var b = new SolidBrush(Color.FromArgb(0x08, 0x08, 0x0A))) g.FillPath(b, path);
-                        if (keys != null)
+            if (keys != null)
+                for (int r = 0; r < 2; r++)
+                    for (int c = 0; c < 4; c++)
+                        using (var path = Round(new RectangleF(x + SrcKeyX[c] * DevS, y + SrcKeyY[r] * DevS, SrcKey * DevS, SrcKey * DevS), SrcKeyR * DevS))
                         {
                             var st = g.Save();
                             g.SetClip(path);
                             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                            g.DrawImage(keys, new RectangleF(kx, ky, Key, Key), new RectangleF(c * 144, r * 144, 144, 144), GraphicsUnit.Pixel);
+                            g.DrawImage(keys, path.GetBounds(), new RectangleF(c * 144, r * 144, 144, 144), GraphicsUnit.Pixel);
                             g.Restore(st);
                         }
-                        using (var p = new Pen(Color.FromArgb(0x3A, 0x3A, 0x44), 2)) g.DrawPath(p, path);
-                    }
-                }
 
-            // 觸控條
-            float sx = x + Bez, sy = y + Bez + KeysH + 34;
-            g.FillRectangle(Brushes.Black, sx - 4, sy - 4, StripW + 8, StripH + 8);
-            Pixel(g, strip, sx, sy, StripW, StripH);
+            // 觸控條：800x100 的畫面放在玻璃的正中間
+            float sx = x + SrcStripX * DevS;
+            float sy = y + (SrcStripY + SrcStripH / 2) * DevS - 50;
+            Pixel(g, strip, sx, sy, 800, 100);
 
-            // 旋鈕
-            float cy = sy + StripH + 36 + DialR;
-            for (int i = 0; i < 4; i++)
-            {
-                float cx = sx + 100 + i * 200;
-                Dial(g, cx, cy, DialR);
-                if (labels != null && labels[i] != null)
+            // 旋鈕下方的標籤
+            if (labels != null)
+                for (int i = 0; i < 4; i++)
                 {
+                    if (labels[i] == null) continue;
                     Color c = colors != null ? colors[i] : Color.White;
                     using (var f = F(22, FontStyle.Bold))
                     using (var b = new SolidBrush(c))
                     using (var fmt = new StringFormat { Alignment = StringAlignment.Center })
-                        g.DrawString(labels[i], f, b, cx, cy + DialR + 14, fmt);
+                        g.DrawString(labels[i], f, b, x + SrcDialX[i] * DevS, y + (SrcDialY + SrcDialR) * DevS + 10, fmt);
                 }
-            }
         }
 
         // 右邊放裝置，左邊放標題和 2 倍大的觸控條特寫
-        const float DevX = W - 60 - DevW, DevY = (H - DevH) / 2, LeftW = 800;
+        const float DevX = W - 40 - DevW, DevY = (H - DevH - 36) / 2, LeftW = 800;
 
         static void Card(Graphics g, Image img, float x, float y, float w, float h, float rad = 14)
         {
@@ -254,7 +242,7 @@ namespace MiniGame
                 using (var b = Crop(race, 400, 400)) Card(g, b, 120, 570, 800, 200);
                 Caption(g, "TOUCH STRIP, 2X", 120, 790, 800);
                 Device(g, DevX, DevY, race, map, new[] { "P1", "P2", "P3", "P4" }, RacerConst.PlayerColors);
-                Caption(g, "RACER MAP ON THE KEYS: LIVE POSITIONS AND RANKING", DevX, DevY + DevH + 22, DevW);
+                Caption(g, "RACER MAP ON THE KEYS: LIVE POSITIONS AND RANKING", DevX, DevY + DevH + 4, DevW);
             }
             End(g, bmp, "gallery-1-racer-4p");
         }
@@ -294,9 +282,9 @@ namespace MiniGame
                 }
                 using (var br = Img("breakout")) Card(g, br, 120, 330, 400, 200);
                 using (var sn = Img("snake")) Card(g, sn, 120, 570, 400, 200);
-                using (var st = Img("stage_1")) Card(g, st, 560, 330, 400, 200);
-                using (var st = Img("stage_4")) Card(g, st, 560, 570, 400, 200);
-                Caption(g, "TOUCH STRIP, 2X", 120, 790, 840);
+                using (var st = Img("stage_1")) Card(g, st, 540, 330, 400, 200);
+                using (var st = Img("stage_4")) Card(g, st, 540, 570, 400, 200);
+                Caption(g, "TOUCH STRIP, 2X", 120, 790, 820);
                 Device(g, DevX, DevY, strip, null, new[] { "Breakout", "Snake", "Sunset Racer", "Sunset Racer" }, new[] { Color.White, Color.White, Color.White, Color.White });
             }
             End(g, bmp, "gallery-3-classics");

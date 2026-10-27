@@ -28,7 +28,7 @@ Code and text written with AI assistance (Claude). All graphics are drawn by the
 
 ## Images
 
-All images are rendered by `tools/shots` from the real game code. The device in the gallery is a Stream Deck+ at its true layout: 8 keys, the 800 x 100 touch strip, 4 dials.
+All images are rendered by `tools/shots` from the real game code. The device in the gallery is Elgato's official Stream Deck+ render, exported from the Stream Deck Templates on Figma to `tools/shots/stream-deck-plus.png` (not in git, as it is Elgato's asset). The game screens are composited onto its keys and touch strip.
 
 | File | Use |
 |---|---|
@@ -50,7 +50,7 @@ Included
 
 Requires Stream Deck+ and Stream Deck 7.1 or later on Windows 10 or macOS 12 or later.
 
-Resubmission: same plugin file and version (1.0.0.0). The description now covers every action, setup tips and requirements, and the gallery images were redone to show the Stream Deck+ accurately (8 keys, touch strip, 4 dials) with current in-game text.
+Resubmission: same plugin file and version (1.0.0.0). Product media now uses Elgato's official Stream Deck+ render (from the Stream Deck Templates) as the base for every device shown in the gallery. The device itself is unchanged; only real in-game screens are placed on its keys and touch strip, at their native size. The description covers every action, setup tips and requirements.
 
 ## Submission notes
 
